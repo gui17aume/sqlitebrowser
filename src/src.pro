@@ -207,8 +207,8 @@ CONFIG(sqlcipher) {
 
     # Add the paths for Homebrew installed SQLite
     macx {
-        INCLUDEPATH += /usr/local/opt/sqlite/include
-        LIBS += -L/usr/local/opt/sqlite/lib
+        INCLUDEPATH += /usr/local/opt/sqlite/include /opt/homebrew/opt/sqlite/include
+        LIBS += -L/usr/local/opt/sqlite/lib -L/opt/homebrew/opt/sqlite/lib
     }
 }
 
