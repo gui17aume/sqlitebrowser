@@ -24,7 +24,9 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 if(APPLE)
-    add_executable(${PROJECT_NAME} MACOSX_BUNDLE)
+    set(ICON_FILE ${CMAKE_CURRENT_SOURCE_DIR}/images/AppIcon.icns)
+    set_source_files_properties(${ICON_FILE} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
+    add_executable(${PROJECT_NAME} MACOSX_BUNDLE ${ICON_FILE})
 elseif(WIN32)
     add_executable(${PROJECT_NAME} WIN32)
 else()
@@ -418,8 +420,8 @@ endif()
 # add extra library path for MacOS and FreeBSD
 set(EXTRAPATH APPLE OR ${CMAKE_SYSTEM_NAME} MATCHES "FreeBSD")
 if(EXTRAPATH)
-    find_library(LIBSQLITE ${LIBSQLITE_NAME} HINTS /usr/local/lib /usr/local/opt/sqlite/lib)
-    set(ADDITIONAL_INCLUDE_PATHS /usr/local/include /usr/local/opt/sqlite/include)
+    find_library(LIBSQLITE ${LIBSQLITE_NAME} HINTS /usr/local/lib /usr/local/opt/sqlite/lib /opt/homebrew/opt/sqlite/lib)
+    set(ADDITIONAL_INCLUDE_PATHS /usr/local/include /usr/local/opt/sqlite/include /opt/homebrew/opt/sqlite/include)
 else()
     find_library(LIBSQLITE ${LIBSQLITE_NAME})
 endif()
@@ -654,6 +656,7 @@ if(APPLE)
         OUTPUT_NAME "DB Browser for SQLite"
         MACOSX_BUNDLE_INFO_PLIST ${CMAKE_SOURCE_DIR}/src/app.plist
     )
+    set(ICON AppIcon)
 endif()
 
 # CPack configuration
